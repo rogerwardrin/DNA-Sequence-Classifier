@@ -1,6 +1,6 @@
 import re
 
-def extract_chr1(input_fasta, output_fasta, chr):
+def extract_chromosome(input_fasta, output_fasta, chr):
     with open(input_fasta, "r") as infile, open(output_fasta, "w") as outfile:
         writing = False
 
