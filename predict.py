@@ -7,6 +7,7 @@ import re
 class DNAClassifier:
     def __init__(self, model_path, kmer_path, species, k_values = [5]):
         self.model = lgb.Booster(model_file = model_path)
+        self.species = species
 
         with open("kmer_index.pkl", "rb") as f:
             self.kmer_index = pickle.load(f)
@@ -48,7 +49,8 @@ class DNAClassifier:
         with open("best_thresh.pkl", "rb") as f:
             THRESHOLD = pickle.load(f)
         
-        label = species[0] if prob > THRESHOLD else species[1]
+        print(self.species[0],self.species[1])
+        label = self.species[0] if prob > THRESHOLD else self.species[1]
 
         return label, prob
 
@@ -59,7 +61,7 @@ with open("species.pkl", "rb") as f:
 classifier = DNAClassifier("dna_model_human_dog.txt", "kmer_index.pkl", species)
 
 seq = input("Enter DNA Sequence: ")
-
+print(species)
 label, prob = classifier.predict(seq)
 
 print("\nPrediction: ",label)
